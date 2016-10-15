@@ -1,0 +1,46 @@
+<!-- aggregate CSV files into a single object for each word -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title> Aggregate CSVs </title>
+    <script src='http://d3js.org/d3.v3.min.js' charset='utf-8'></script>
+  </head>
+  <body>
+      Hello!
+
+      <script type='text/javascript'>
+        var year;
+        var filename;
+        var words = {};
+
+        // TODO write file aggregator that outputs something like:
+        // {word:___ freq:[{year:___, count:___}, {year:___, count:___}]}
+
+        for (year=2001; year<2017; year++){
+            filename = "SOTU-csv/" + year + ".csv";
+            d3.csv(filename, function(dataset){
+                // console.log(dataset);
+                dataset.forEach(function(d){
+                    if (words.hasOwnProperty(d.word)){
+                        words[d.word].push({year: d.year, count: +d.frequency});
+                    } else {
+                        words[d.word] = [{year: d.year, count: +d.frequency}];
+                    }
+                });
+
+                var word_freq_pairs = d3.entries(words);
+                console.log(words);
+                console.log(word_freq_pairs);
+            });
+        }
+
+
+
+
+        // TODO get top 50 from among these? Format it differently?
+
+      </script>
+  </body>
+</html>
